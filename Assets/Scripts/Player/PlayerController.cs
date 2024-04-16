@@ -16,10 +16,13 @@ public class PlayerController : MonoBehaviour
 
 
     private Rigidbody2D rb;
+    //物理检测组件
+    private PhysicsCheck physicsCheck;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+        physicsCheck = GetComponent<PhysicsCheck>();
         inputControls = new PlayerInputControls();
         inputControls.GamePlay.Jump.started += Jump;
             
@@ -67,6 +70,9 @@ public class PlayerController : MonoBehaviour
     {
         //TODO 空中可以无限跳跃
         //TODO 跳跃后，在空中贴墙按住方向键，可以卡在墙上不落地
-        rb.AddForce(Vector2.up * jumpForce,ForceMode2D.Impulse);
+        if (physicsCheck.isGround)
+        {
+            rb.AddForce(Vector2.up * jumpForce,ForceMode2D.Impulse);
+        }
     }
 }
