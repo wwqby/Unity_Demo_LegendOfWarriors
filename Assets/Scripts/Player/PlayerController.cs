@@ -11,15 +11,21 @@ public class PlayerController : MonoBehaviour
     public Vector2 inputDirection;
     public float speed;
 
+    public float jumpForce;
+
 
 
     private Rigidbody2D rb;
 
     private void Awake()
     {
-        inputControls = new PlayerInputControls();
         rb = GetComponent<Rigidbody2D>();
+        inputControls = new PlayerInputControls();
+        inputControls.GamePlay.Jump.started += Jump;
+            
+        
     }
+
 
     private void OnEnable()
     {
@@ -54,5 +60,13 @@ public class PlayerController : MonoBehaviour
             //通过flip来控制
             GetComponent<SpriteRenderer>().flipX = direaction == -1;
         }   
+    }
+
+    //跳跃
+    private void Jump(InputAction.CallbackContext context)
+    {
+        //TODO 空中可以无限跳跃
+        //TODO 跳跃后，在空中贴墙按住方向键，可以卡在墙上不落地
+        rb.AddForce(Vector2.up * jumpForce,ForceMode2D.Impulse);
     }
 }
