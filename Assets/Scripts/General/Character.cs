@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 /// <summary>
 /// 单位属性
 /// </summary>
@@ -14,6 +15,10 @@ public class Character : MonoBehaviour
     private float invincibleTimer;
     //get属性
     public bool isInvincible { get { return invincibleTimer > 0; } }
+    [Header("受伤事件")]
+    public UnityEvent<Transform> onTakeDamage;
+    [Header("死亡事件")]
+    public UnityEvent onDie;
 
     private void Start()
     {
@@ -41,14 +46,18 @@ public class Character : MonoBehaviour
         {
             return;
         }
-        if (currentHealth <= 0)
+        if (currentHealth - attack.damage > 0)
         {
-            //人物死亡
-            Debug.Log(gameObject.name + "死亡");
+            currentHealth -= attack.damage;
+            TriggerInvincible();
+            //安全调用受伤事件
+            onTakeDamage?.Invoke(attack.transform);
             return;
         }
-        currentHealth -= attack.damage;
-        TriggerInvincible();
+        //人物死亡
+        Debug.Log(gameObject.name + "死亡");
+        currentHealth = 0;
+        onDie?.Invoke();
     }
     /// <summary>
     /// 触发无敌，打开无敌时间计时器
