@@ -22,7 +22,7 @@ public class Attack : MonoBehaviour
     /// <param name="other"> 被攻击对象</param>
     private void OnTriggerStay2D(Collider2D other)
     {
-        Debug.Log(other.name + "被攻击");
+        Debug.Log(other.name + "被攻击"); 
         //被攻击对象调用受伤计算
         other?.GetComponent<Character>()?.TakeDamage(this);
     }
