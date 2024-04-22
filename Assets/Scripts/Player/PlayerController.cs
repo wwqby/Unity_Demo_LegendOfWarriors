@@ -6,6 +6,7 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
+    #region 成员变量
     public PlayerInputControls inputControls;
     [Header("Movement")]
     public Vector2 inputDirection;
@@ -24,6 +25,16 @@ public class PlayerController : MonoBehaviour
     public bool isHurt;
     public float hurtForce;
     public bool isDead;
+
+    [Header("物理材质")]
+    public PhysicsMaterial2D ground;
+    public PhysicsMaterial2D wall;
+
+
+    #endregion
+
+
+    #region 周期函数
 
     private void Awake()
     {
@@ -51,17 +62,25 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         inputDirection = inputControls.GamePlay.Move.ReadValue<Vector2>();
+        UpdateMatierial();
     }
+
+
     //物理引擎更新，可以在projectSettings中设置，0.002s
     private void FixedUpdate()
     {
         //受伤禁止移动
-        if (isHurt)
+        if (isHurt || isAttack)
         {
             return;
         }
         Move();
     }
+
+
+    #endregion
+
+
     //移动
     private void Move()
     {
@@ -98,9 +117,20 @@ public class PlayerController : MonoBehaviour
     }
 
     /// <summary>
+    /// 检查更新当前物理材质
+    /// </summary>
+    private void UpdateMatierial()
+    {
+        rb.sharedMaterial = physicsCheck.isGround ? ground : wall;
+    }
+
+
+
+    #region 事件
+    /// <summary>
     /// 受伤事件
     /// </summary>
-    public void GetHurt(Transform attacker)
+    public void OnHurt(Transform attacker)
     {
         //更新受伤标志
         isHurt = true;
@@ -115,4 +145,7 @@ public class PlayerController : MonoBehaviour
         isDead = true;
         inputControls.GamePlay.Disable();
     }
+
+    #endregion
+
 }

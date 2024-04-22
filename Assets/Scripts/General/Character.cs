@@ -42,6 +42,7 @@ public class Character : MonoBehaviour
     /// <param name="attack"> 受攻击对象</param>
     public void TakeDamage(Attack attack)
     {
+        Debug.Log(gameObject.name + "受到攻击:"+attack.damage);
         if (isInvincible)
         {
             return;
