@@ -27,7 +27,7 @@ public class PhysicsCheck : MonoBehaviour
         colli = GetComponent<CapsuleCollider2D>();
         if (!manual)
         {
-            ChangeDirection(transform,false);
+            ChangeDirection(transform,transform.localScale.x<0);
         }
     }
     /// <summary>

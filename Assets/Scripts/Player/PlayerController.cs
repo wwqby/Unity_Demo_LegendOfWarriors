@@ -42,8 +42,8 @@ public class PlayerController : MonoBehaviour
         physicsCheck = GetComponent<PhysicsCheck>();
         inputControls = new PlayerInputControls();
         playerAnimation = GetComponent<PlayerAnimation>();
-        inputControls.GamePlay.Jump.started += Jump;
-        inputControls.GamePlay.Attack.started += PlayerAttack;
+        inputControls.GamePlay.Jump.started += OnJump;
+        inputControls.GamePlay.Attack.started += OnPlayerAttack;
 
     }
 
@@ -91,14 +91,16 @@ public class PlayerController : MonoBehaviour
         {
             int direaction = inputDirection.x > 0 ? 1 : -1;
             //通过scale控制方向
-            // transform.localScale = new Vector3(direaction, 1, 1);
-            //通过flip来控制
-            GetComponent<SpriteRenderer>().flipX = direaction == -1;
+            transform.localScale = new Vector3(direaction, 1, 1);
+            //通过flip来控制,无法控制子节点方向
+            // GetComponent<SpriteRenderer>().flipX = direaction == -1;
+            //更新辅助点
+            physicsCheck.ChangeDirection(transform);
         }
     }
 
     //跳跃
-    private void Jump(InputAction.CallbackContext context)
+    private void OnJump(InputAction.CallbackContext context)
     {
         if (physicsCheck.isGround)
         {
@@ -110,8 +112,12 @@ public class PlayerController : MonoBehaviour
     ///     攻击事件
     /// </summary>
     /// <param name="context"></param>
-    private void PlayerAttack(InputAction.CallbackContext context)
-    {
+    private void OnPlayerAttack(InputAction.CallbackContext context)
+    {   
+        //不允许空中攻击
+        if (!physicsCheck.isGround){
+            return;
+        }
         playerAnimation.PlayerAttack();
         isAttack = true;
     }
