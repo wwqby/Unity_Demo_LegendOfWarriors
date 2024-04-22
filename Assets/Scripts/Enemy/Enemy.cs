@@ -7,6 +7,7 @@ public class Enemy : MonoBehaviour
 {
     protected Rigidbody2D rb;
     protected Animator animator;
+    protected PhysicsCheck physicsCheck;
 
     [Header("基本属性")]
     public int normalSpeed;
@@ -15,20 +16,21 @@ public class Enemy : MonoBehaviour
 
     public Vector2 faceDir;
 
-    private void Awake()
+    protected virtual void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        physicsCheck = GetComponent<PhysicsCheck>();
         currentSpeed = normalSpeed;
     }
 
-    private void FixedUpdate()
+    protected virtual void FixedUpdate()
     {
         Move();
     }
 
 
-    private void Update()
+    protected virtual void Update()
     {
         faceDir = new Vector2(-transform.localScale.x, 0);
     }
