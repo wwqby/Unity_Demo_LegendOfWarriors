@@ -895,6 +895,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  onHealthChange:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &197355755
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2306,8 +2309,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 584288345}
+  - component: {fileID: 584288346}
   m_Layer: 5
-  m_Name: StateBar
+  m_Name: PlayerStateBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2335,6 +2339,21 @@ RectTransform:
   m_AnchoredPosition: {x: 441.2, y: -174.9}
   m_SizeDelta: {x: 531.7, y: 110}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &584288346
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 584288344}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e256b7541fdbe84dbdcbffa86af8700, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthBar: {fileID: 540910966}
+  healthDelayBar: {fileID: 406421639}
+  powerBar: {fileID: 140064838}
 --- !u!1 &610106396
 GameObject:
   m_ObjectHideFlags: 0
@@ -2735,6 +2754,21 @@ MonoBehaviour:
         m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
         m_MethodName: OnDie
         m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onHealthChange:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 11400000, guid: 527d20d75ddbcb54ca9da07b5a9fce74, type: 2}
+        m_TargetAssemblyTypeName: CharactorEventSO, Assembly-CSharp
+        m_MethodName: RaiseEvent
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -9328,7 +9362,7 @@ Tilemap:
       - {fileID: -1245517823, guid: d77f3dbbe4217af4bb92439588a37164, type: 3}
       - {fileID: 2012578049, guid: d77f3dbbe4217af4bb92439588a37164, type: 3}
       - {fileID: 1942275862, guid: d77f3dbbe4217af4bb92439588a37164, type: 3}
-      m_AnimationSpeed: 7
+      m_AnimationSpeed: 7.0000005
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: 5, y: -13, z: 0}
@@ -9427,7 +9461,7 @@ Tilemap:
       - {fileID: -1245517823, guid: d77f3dbbe4217af4bb92439588a37164, type: 3}
       - {fileID: 2012578049, guid: d77f3dbbe4217af4bb92439588a37164, type: 3}
       - {fileID: 1942275862, guid: d77f3dbbe4217af4bb92439588a37164, type: 3}
-      m_AnimationSpeed: 7.0000005
+      m_AnimationSpeed: 7
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: 5, y: -10, z: 0}
@@ -9460,7 +9494,7 @@ Tilemap:
       - {fileID: -1245517823, guid: d77f3dbbe4217af4bb92439588a37164, type: 3}
       - {fileID: 2012578049, guid: d77f3dbbe4217af4bb92439588a37164, type: 3}
       - {fileID: 1942275862, guid: d77f3dbbe4217af4bb92439588a37164, type: 3}
-      m_AnimationSpeed: 7
+      m_AnimationSpeed: 7.0000005
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: 5, y: -9, z: 0}
@@ -9537,7 +9571,7 @@ Tilemap:
       - {fileID: -870628778, guid: d77f3dbbe4217af4bb92439588a37164, type: 3}
       - {fileID: 907131859, guid: d77f3dbbe4217af4bb92439588a37164, type: 3}
       - {fileID: -457935630, guid: d77f3dbbe4217af4bb92439588a37164, type: 3}
-      m_AnimationSpeed: 7
+      m_AnimationSpeed: 7.0000005
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: 3, y: -6, z: 0}
@@ -9625,7 +9659,7 @@ Tilemap:
       - {fileID: -1245517823, guid: d77f3dbbe4217af4bb92439588a37164, type: 3}
       - {fileID: 2012578049, guid: d77f3dbbe4217af4bb92439588a37164, type: 3}
       - {fileID: 1942275862, guid: d77f3dbbe4217af4bb92439588a37164, type: 3}
-      m_AnimationSpeed: 7
+      m_AnimationSpeed: 7.0000005
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: 5, y: -4, z: 0}
@@ -9724,7 +9758,7 @@ Tilemap:
       - {fileID: -1245517823, guid: d77f3dbbe4217af4bb92439588a37164, type: 3}
       - {fileID: 2012578049, guid: d77f3dbbe4217af4bb92439588a37164, type: 3}
       - {fileID: 1942275862, guid: d77f3dbbe4217af4bb92439588a37164, type: 3}
-      m_AnimationSpeed: 7.0000005
+      m_AnimationSpeed: 7
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: 5, y: -1, z: 0}
@@ -9911,7 +9945,7 @@ Tilemap:
       - {fileID: -992974554, guid: d77f3dbbe4217af4bb92439588a37164, type: 3}
       - {fileID: -1354799368, guid: d77f3dbbe4217af4bb92439588a37164, type: 3}
       - {fileID: 377879312, guid: d77f3dbbe4217af4bb92439588a37164, type: 3}
-      m_AnimationSpeed: 7
+      m_AnimationSpeed: 7.0000005
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: 4, y: 5, z: 0}
@@ -9966,7 +10000,7 @@ Tilemap:
       - {fileID: -870628778, guid: d77f3dbbe4217af4bb92439588a37164, type: 3}
       - {fileID: 907131859, guid: d77f3dbbe4217af4bb92439588a37164, type: 3}
       - {fileID: -457935630, guid: d77f3dbbe4217af4bb92439588a37164, type: 3}
-      m_AnimationSpeed: 7
+      m_AnimationSpeed: 7.0000005
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: 3, y: 7, z: 0}
@@ -10549,6 +10583,52 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1825199354}
   m_CullTransparentMesh: 1
+--- !u!1 &2018078817
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2018078819}
+  - component: {fileID: 2018078818}
+  m_Layer: 0
+  m_Name: UIManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2018078818
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2018078817}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4823b7c11b190747ab965e685f001ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerStatebar: {fileID: 584288346}
+  healthChangeEvent: {fileID: 11400000, guid: 527d20d75ddbcb54ca9da07b5a9fce74, type: 2}
+--- !u!4 &2018078819
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2018078817}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2085014727
 GameObject:
   m_ObjectHideFlags: 0
@@ -10661,3 +10741,4 @@ SceneRoots:
   - {fileID: 1228948710}
   - {fileID: 350206175}
   - {fileID: 531663629}
+  - {fileID: 2018078819}

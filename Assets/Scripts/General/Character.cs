@@ -19,11 +19,14 @@ public class Character : MonoBehaviour
     public UnityEvent<Transform> onTakeDamage;
     [Header("死亡事件")]
     public UnityEvent onDie;
+    [Header("改变血量事件")]
+    public UnityEvent<Character> onHealthChange;
 
     private void Start()
     {
         //游戏开始时，满血
         currentHealth = maxHealth;
+        onHealthChange?.Invoke(this);
     }
 
     private void Update()
@@ -53,6 +56,7 @@ public class Character : MonoBehaviour
             TriggerInvincible();
             //安全调用受伤事件
             onTakeDamage?.Invoke(attack.transform);
+            onHealthChange?.Invoke(this);
             return;
         }
         //人物死亡
