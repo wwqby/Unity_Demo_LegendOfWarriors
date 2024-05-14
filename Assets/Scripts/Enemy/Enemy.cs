@@ -17,13 +17,23 @@ public class Enemy : MonoBehaviour
 
     public Vector2 faceDir;
     public float hurtForce;
+
     [Header("状态")]
     public bool isHurt;
     public bool isDead;
+
+    [Header("检测")]
+    public Vector2 castOffset;
+    public Vector2 boxSize;
+    public float castDistance;
+    public LayerMask castLayer;
     /// <summary>
     /// 当前行为状态
     /// </summary>
     protected BaseState currentState;
+
+
+    #region 生命周期方法
 
     protected virtual void Awake()
     {
@@ -32,7 +42,8 @@ public class Enemy : MonoBehaviour
         physicsCheck = GetComponent<PhysicsCheck>();
         currentSpeed = normalSpeed;
     }
-    protected void OnEnable() {
+    protected void OnEnable()
+    {
         currentState.OnEnter(this);
     }
     protected virtual void Update()
@@ -46,23 +57,63 @@ public class Enemy : MonoBehaviour
         currentState.OnPhysicsUpdate();
     }
 
-    protected virtual void OnDisable() {
+    protected virtual void OnDisable()
+    {
         currentState.OnExit();
     }
 
+    #endregion
+
+    #region  私有方法
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.DrawWireSphere((Vector2)transform.position + castOffset, 0.2f);
+        Gizmos.DrawRay((Vector2)transform.position + castOffset, transform.TransformDirection(faceDir) * castDistance);
+    }
+
+    #endregion
+
+    #region 公共成员方法
+    /// <summary>
+    /// 移动
+    /// </summary>
     public virtual void Move()
     {
-        if (isHurt || isDead )
+        if (isHurt || isDead)
         {
             return;
         }
         rb.velocity = new Vector2(faceDir.x * currentSpeed * Time.fixedDeltaTime, rb.velocity.y);
-        Debug.Log("Move:" + rb.velocity.x);
     }
-
-    public void Stop(){
+    /// <summary>
+    /// 停止移动
+    /// </summary>
+    public void Stop()
+    {
         rb.velocity = Vector2.zero;
     }
+
+    public bool FoundPlayer()
+    {
+        return Physics2D.BoxCast(transform.position + (Vector3)castOffset, boxSize, 0, faceDir, castDistance, castLayer);
+    }
+
+    public void SwitchState(NPCState state)
+    {
+        BaseState newState = state switch
+        {
+            NPCState.Patrols => new BoarPotrolState(),
+            NPCState.Chase => new BoarChaseState(),
+            _ => null
+        };
+        currentState.OnExit();
+        currentState = newState;
+        currentState.OnEnter(this);
+    }
+    #endregion
+
+    #region  事件方法
 
     /// <summary>
     /// 受伤事件
@@ -90,13 +141,16 @@ public class Enemy : MonoBehaviour
     }
 
 
-    public virtual void OnDestroy() {
+    public virtual void OnDestroy()
+    {
         Destroy(gameObject);
     }
 
     private IEnumerator HurtAnimationEnd()
     {
-        yield return new WaitForSeconds(0.4f);
+        yield return new WaitForSeconds(1.0f);
         isHurt = false;
     }
+
+    #endregion
 }

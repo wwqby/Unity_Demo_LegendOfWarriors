@@ -36,8 +36,8 @@ public class PhysicsCheck : MonoBehaviour
     /// </summary>
     private void FixedUpdate()
     {
-        // isGround = Physics2D.Raycast(transform.position, Vector2.down, 0.1f);
-        isGround = Physics2D.OverlapCircle((Vector2)transform.position + bottomOffset, checkRadius, groundLayer);
+        isGround = Physics2D.Raycast((Vector2)transform.position+bottomOffset, Vector2.down, checkRadius);
+        // isGround = Physics2D.OverlapCircle((Vector2)transform.position + bottomOffset, checkRadius, groundLayer);
         isLeftWall = Physics2D.OverlapCircle((Vector2)transform.position + leftOffset, checkRadius, groundLayer);
         isRightWall = Physics2D.OverlapCircle((Vector2)transform.position + rightOffset, checkRadius, groundLayer);
     }
