@@ -1,13 +1,14 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    protected Rigidbody2D rb;
-    protected Animator animator;
-    protected PhysicsCheck physicsCheck;
+    public Rigidbody2D rb;
+    public Animator animator;
+    public PhysicsCheck physicsCheck;
 
     [Header("基本属性")]
     public int normalSpeed;
@@ -19,6 +20,10 @@ public class Enemy : MonoBehaviour
     [Header("状态")]
     public bool isHurt;
     public bool isDead;
+    /// <summary>
+    /// 当前行为状态
+    /// </summary>
+    protected BaseState currentState;
 
     protected virtual void Awake()
     {
@@ -27,26 +32,36 @@ public class Enemy : MonoBehaviour
         physicsCheck = GetComponent<PhysicsCheck>();
         currentSpeed = normalSpeed;
     }
-
-    protected virtual void FixedUpdate()
-    {
-        Move();
+    protected void OnEnable() {
+        currentState.OnEnter(this);
     }
-
-
     protected virtual void Update()
     {
         //怪物默认向左，所以取scale的反方向
         faceDir = new Vector2(-transform.localScale.x, 0);
+        currentState.OnLogicUpdate();
+    }
+    protected virtual void FixedUpdate()
+    {
+        currentState.OnPhysicsUpdate();
+    }
+
+    protected virtual void OnDisable() {
+        currentState.OnExit();
     }
 
     public virtual void Move()
     {
-        if (isHurt || isDead)
+        if (isHurt || isDead )
         {
             return;
         }
         rb.velocity = new Vector2(faceDir.x * currentSpeed * Time.fixedDeltaTime, rb.velocity.y);
+        Debug.Log("Move:" + rb.velocity.x);
+    }
+
+    public void Stop(){
+        rb.velocity = Vector2.zero;
     }
 
     /// <summary>
