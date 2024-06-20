@@ -74,4 +74,14 @@ public class Character : MonoBehaviour
             invincibleTimer = invincibleDuration;
         }
     }
+
+
+    private void OnTriggerStay2D(Collider2D other) {
+        if (other.CompareTag("Water")){
+            currentHealth = 0;
+            onHealthChange?.Invoke(this);
+            onDie?.Invoke();
+            return;
+        }
+    }
 }
