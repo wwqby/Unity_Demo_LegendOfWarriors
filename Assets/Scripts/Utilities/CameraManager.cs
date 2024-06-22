@@ -9,6 +9,7 @@ public class CameraManager : MonoBehaviour
 
     public CinemachineImpulseSource cinemachineImpulseSource;
     public VoidEventSO cameraShakedEvent;
+    public VoidEventSO afterSceneLoad;
 
     private void Awake() {
         cinemachineConfiner2D = GetComponent<CinemachineConfiner2D>();
@@ -16,10 +17,12 @@ public class CameraManager : MonoBehaviour
 
     private void OnEnable() {
         cameraShakedEvent.OnVoidEventRaised += OnCameraShaked;
+        afterSceneLoad.OnVoidEventRaised += GetNewBounds;
     }
 
     private void OnDisable() {
         cameraShakedEvent.OnVoidEventRaised -= OnCameraShaked;
+        afterSceneLoad.OnVoidEventRaised -= GetNewBounds;
     }
 
 
