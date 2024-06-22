@@ -123,6 +123,53 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &42949502
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 42949503}
+  - component: {fileID: 42949504}
+  m_Layer: 7
+  m_Name: Jump
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &42949503
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 42949502}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 616367042}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &42949504
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 42949502}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03bac0c348e2ead459c1ea3e23252191, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioClip: {fileID: 8300000, guid: 2c5292ba5cf254919a6b9e2b18e04f49, type: 3}
+  audioEventSO: {fileID: 11400000, guid: c6d85792f9693914f89fd6bd8c8cc36b, type: 2}
+  playOnStart: 0
 --- !u!1 &110609771
 GameObject:
   m_ObjectHideFlags: 0
@@ -746,7 +793,7 @@ MonoBehaviour:
   spriteRenderer: {fileID: 0}
   playerTransform: {fileID: 0}
   animator: {fileID: 0}
-  interactable: 0
+  isInteractable: 0
 --- !u!1 &406421637
 GameObject:
   m_ObjectHideFlags: 0
@@ -1366,6 +1413,7 @@ Transform:
   m_Children:
   - {fileID: 354372640}
   - {fileID: 583257652}
+  - {fileID: 42949503}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &616367043
@@ -1451,6 +1499,7 @@ MonoBehaviour:
   isDead: 0
   ground: {fileID: 6200000, guid: 56467b6a1cc572d46b44e97ce621c484, type: 2}
   wall: {fileID: 6200000, guid: 01810a8bb5b4a1644b80a3cbbcbec200, type: 2}
+  audioDefination: {fileID: 0}
 --- !u!114 &616367046
 MonoBehaviour:
   m_ObjectHideFlags: 0

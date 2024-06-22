@@ -29,6 +29,8 @@ public class PlayerController : MonoBehaviour
     [Header("物理材质")]
     public PhysicsMaterial2D ground;
     public PhysicsMaterial2D wall;
+    [Header("音频")]
+    public AudioDefination audioDefination;
 
 
     #endregion
@@ -44,7 +46,7 @@ public class PlayerController : MonoBehaviour
         playerAnimation = GetComponent<PlayerAnimation>();
         inputControls.GamePlay.Jump.started += OnJump;
         inputControls.GamePlay.Attack.started += OnPlayerAttack;
-
+        audioDefination = GetComponentInChildren<AudioDefination>();
     }
 
 
@@ -99,12 +101,17 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    //跳跃
+    /// <summary>
+    /// 跳跃事件
+    /// </summary>
+    /// <param name="context"></param>
     private void OnJump(InputAction.CallbackContext context)
     {
         if (physicsCheck.isGround)
         {
             rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+            //播放音效
+            audioDefination?.PlayAudioClip();
         }
     }
 
