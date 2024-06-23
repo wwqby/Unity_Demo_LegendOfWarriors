@@ -5,7 +5,7 @@ using UnityEngine.AddressableAssets;
 /// <summary>
 /// 场景本地资源管理
 /// </summary>
-[CreateAssetMenu(fileName = "New SceneSO", menuName = "Scene/SceneSO")]
+[CreateAssetMenu(fileName = "New SceneSO", menuName = "SceneAsset/SceneSO")]
 public class SceneSO : ScriptableObject
 {
     public AssetReference sceneReference;

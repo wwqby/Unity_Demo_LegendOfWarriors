@@ -9,10 +9,10 @@ using UnityEngine.AddressableAssets;
 public class TransGate : MonoBehaviour, IInteractable
 {
 
-    public TransGateEventSO transGateEventSO;
+    public TransGateEventSO transGateEventBroadcast;
     public SceneSO transToGo;
     public Vector3 positionToGo;
-    public bool transWithFade;
+    public bool transWithFade = true;
 
     #region 接口方法
     public bool CanInteractable()
@@ -24,8 +24,7 @@ public class TransGate : MonoBehaviour, IInteractable
     public void OnInteractableConfirm()
     {
         //触发传送事件 传送地图，传送坐标，传送特效
-        Debug.Log("传送门被触发");
-        transGateEventSO.OnTransGateEventRaised(transToGo, positionToGo, transWithFade);
+        transGateEventBroadcast.OnTransGateEventRaised(transToGo, positionToGo, transWithFade);
     }
     #endregion
 }

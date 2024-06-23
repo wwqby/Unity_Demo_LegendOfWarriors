@@ -16841,10 +16841,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33ab09285314668469ac13ab6508eecf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  transGateEventSO: {fileID: 11400000, guid: fa03e0b988ff2484cb3c28e68be341f6, type: 2}
+  transGateEventBroadcast: {fileID: 11400000, guid: fa03e0b988ff2484cb3c28e68be341f6, type: 2}
   transToGo: {fileID: 11400000, guid: 369dc1bc0bb497a4da897aec60f729ef, type: 2}
   positionToGo: {x: -8.77, y: -9.06, z: 0}
-  transWithFade: 0
+  transWithFade: 1
 --- !u!61 &1639156537
 BoxCollider2D:
   m_ObjectHideFlags: 0
