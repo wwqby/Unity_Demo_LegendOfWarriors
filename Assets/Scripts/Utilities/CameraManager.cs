@@ -16,13 +16,13 @@ public class CameraManager : MonoBehaviour
     }
 
     private void OnEnable() {
-        cameraShakedEvent.OnVoidEventRaised += OnCameraShaked;
-        afterSceneLoad.OnVoidEventRaised += GetNewBounds;
+        cameraShakedEvent.OnVoidEventAction += OnCameraShaked;
+        afterSceneLoad.OnVoidEventAction += GetNewBounds;
     }
 
     private void OnDisable() {
-        cameraShakedEvent.OnVoidEventRaised -= OnCameraShaked;
-        afterSceneLoad.OnVoidEventRaised -= GetNewBounds;
+        cameraShakedEvent.OnVoidEventAction -= OnCameraShaked;
+        afterSceneLoad.OnVoidEventAction -= GetNewBounds;
     }
 
 

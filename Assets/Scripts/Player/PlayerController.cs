@@ -32,6 +32,10 @@ public class PlayerController : MonoBehaviour
     [Header("音频")]
     public AudioDefination audioDefination;
 
+    [Header("场景切换事件监听")]
+    public SceneLoadEventSO sceneLoadEventListener;
+    public VoidEventSO afterSceneLoadListener;
+
 
     #endregion
 
@@ -52,13 +56,20 @@ public class PlayerController : MonoBehaviour
 
 
     private void OnEnable()
-    {
+    {   
+        Debug.Log("inputControls Enable");
         inputControls.Enable();
+        sceneLoadEventListener.OnSceneLoadAction += OnSceneLoadStart;
+        afterSceneLoadListener.OnVoidEventAction += OnSceneLoadEnd;
     }
 
+
     private void OnDisable()
-    {
+    {   
+        Debug.Log("inputControls Disable");
         inputControls.Disable();
+        sceneLoadEventListener.OnSceneLoadAction -= OnSceneLoadStart;
+        afterSceneLoadListener.OnVoidEventAction -= OnSceneLoadEnd;
     }
 
     private void Update()
@@ -158,6 +169,33 @@ public class PlayerController : MonoBehaviour
         isDead = true;
         inputControls.GamePlay.Disable();
     }
+
+    /// <summary>
+    /// 场景加载开始
+    /// 禁止操作输入
+    /// </summary>
+    /// <param name="arg0"></param>
+    /// <param name="arg1"></param>
+    /// <param name="arg2"></param>
+    private void OnSceneLoadStart(SceneSO arg0, Vector3 arg1, bool arg2)
+    {
+        Debug.Log("场景加载开始1");
+        inputControls.GamePlay.Disable();
+        Debug.Log(inputControls.GamePlay.enabled);
+        Debug.Log("场景加载结束1");
+    }
+
+    /// <summary>
+    /// 场景加载结束
+    /// 打开操作输入
+    /// </summary>
+     private void OnSceneLoadEnd()
+    {
+        Debug.Log("场景加载结束");
+        inputControls.GamePlay.Enable();
+        Debug.Log(inputControls.GamePlay.enabled);
+    }
+
 
     #endregion
 

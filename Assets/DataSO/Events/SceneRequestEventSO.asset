@@ -10,8 +10,5 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 475ed25967ba36c4b88b857b0ecf3d0b, type: 3}
-  m_Name: TransGateEventSO
+  m_Name: SceneRequestEventSO
   m_EditorClassIdentifier: 
-  OnTransGateEvent:
-    m_PersistentCalls:
-      m_Calls: []

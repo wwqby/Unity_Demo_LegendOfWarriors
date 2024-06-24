@@ -20,41 +20,37 @@ public class SceneManager : MonoBehaviour
     public float fadeDuration = 1;
     [Header("玩家位置")]
     public Transform player;
-    public PlayerInputControls inputActions;
-    [Header("传送门事件广播")]
-    public TransGateEventSO transGateEventListener;
+    [Header("事件监听")]
+    public SceneLoadEventSO sceneLoadEventListener;
 
-    public VoidEventSO afterSceneLoad;
+    public VoidEventSO afterSceneLoadListener;
 
+    [Header("事件广播")]
     public FadeChangeEventSO fadeBroadcast;
 
 
-    private void Awake()
-    {
-        inputActions = new PlayerInputControls();
-        //todo 这里是新游戏的入口函数
-        NewGame();
-    }
-
     private void OnEnable()
     {
-        inputActions.Enable();
-        transGateEventListener.OnTransGateAction += OnTransGateActive;
+        sceneLoadEventListener.OnSceneLoadAction += OnSceneLoad;
     }
 
     private void OnDisable()
     {
-        inputActions.Disable();
-        transGateEventListener.OnTransGateAction -= OnTransGateActive;
+        sceneLoadEventListener.OnSceneLoadAction -= OnSceneLoad;
+    }
+
+    private void Start() {
+        
+        LoadOriScene();
     }
 
     /// <summary>
-    /// 传送门触发
+    /// 场景加载
     /// </summary>
     /// <param name="transScene"></param>
     /// <param name="transPosition"></param>
     /// <param name="fade"></param>
-    private void OnTransGateActive(SceneSO transScene, Vector3 transPosition, bool fade)
+    private void OnSceneLoad(SceneSO transScene, Vector3 transPosition, bool fade)
     {
         StartCoroutine(TransGateActive(transScene, transPosition, fade));
     }
@@ -74,9 +70,6 @@ public class SceneManager : MonoBehaviour
             fadeBroadcast.OnFadeOut(fadeDuration);
         }
         yield return new WaitForSeconds(fadeDuration);
-        //隐藏角色，禁止输入
-        player.gameObject.SetActive(false);
-        inputActions.Disable();
         //退出旧场景
         yield return currentScene?.sceneReference?.UnLoadScene();
         //加载新场景
@@ -88,11 +81,12 @@ public class SceneManager : MonoBehaviour
             //移动角色位置
             player.position = transPosition;
             currentPosition = transPosition;
-            //打开角色，打开输入
-            player.gameObject.SetActive(true);
-            inputActions.Enable();
-            afterSceneLoad.RaiseEvent();
-            //todo 渐入渐出
+            //场景加载完毕做处理
+            if (currentScene.sceneType == SceneType.Scene)
+            {
+                afterSceneLoadListener.RaiseEvent();
+            }
+            //渐入渐出
             if (fade)
             {
                 fadeBroadcast.OnFadeIn(fadeDuration);
@@ -101,9 +95,13 @@ public class SceneManager : MonoBehaviour
 
     }
 
-
-    private void NewGame()
-    {
-        StartCoroutine(TransGateActive(oriScene, oriPosition, true));
+    /// <summary>
+    /// 加载第一个场景-菜单
+    /// </summary>
+    private void LoadOriScene()
+    {   
+        //直接调用事件本身来触发广播和事件
+        // StartCoroutine(TransGateActive(oriScene, oriPosition, true));
+        sceneLoadEventListener.OnSceneLoadEventRaised(oriScene, oriPosition, true);
     }
 }

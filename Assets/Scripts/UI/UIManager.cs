@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,16 +6,24 @@ using UnityEngine;
 public class UIManager : MonoBehaviour
 {   
     public PlayerStatebar playerStatebar;
-    public CharactorEventSO healthChangeEvent;
+    [Header("事件监听")]
+    public CharactorEventSO healthChangeListener;
+    public SceneLoadEventSO sceneLoadListener;
 
     private void OnEnable() {
-        healthChangeEvent.OnCharactorEventRaised += OnHealthChangeEvent;
+        healthChangeListener.OnCharactorEventRaised += OnHealthChangeEvent;
+        sceneLoadListener.OnSceneLoadAction += OnSceneLoad;
     }
 
     private void OnDisable() {
-        healthChangeEvent.OnCharactorEventRaised -= OnHealthChangeEvent;
+        healthChangeListener.OnCharactorEventRaised -= OnHealthChangeEvent;
+        sceneLoadListener.OnSceneLoadAction -= OnSceneLoad;
     }
 
+    private void OnSceneLoad(SceneSO scene, Vector3 arg1, bool arg2)
+    {
+        playerStatebar.gameObject.SetActive(scene.sceneType == SceneType.Scene);
+    }
 
     public void OnHealthChangeEvent(Character character){
         playerStatebar.ChangeHealth(character.currentHealth/character.maxHealth);

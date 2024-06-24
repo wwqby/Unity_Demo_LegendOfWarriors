@@ -647,8 +647,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.028301895, g: 0.028168395, b: 0.028168395, a: 1}
-  m_RaycastTarget: 1
+  m_Color: {r: 0.028301895, g: 0.028168395, b: 0.028168395, a: 0}
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -1031,7 +1031,7 @@ Transform:
   m_GameObject: {fileID: 519420028}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.86999905, y: 5, z: -10}
+  m_LocalPosition: {x: -0.910001, y: -8.81, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1482,7 +1482,7 @@ Transform:
   m_GameObject: {fileID: 616367040}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.87, y: 4, z: 0}
+  m_LocalPosition: {x: -0.91, y: -9.81, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1575,6 +1575,8 @@ MonoBehaviour:
   ground: {fileID: 6200000, guid: 56467b6a1cc572d46b44e97ce621c484, type: 2}
   wall: {fileID: 6200000, guid: 01810a8bb5b4a1644b80a3cbbcbec200, type: 2}
   audioDefination: {fileID: 0}
+  sceneLoadEventListener: {fileID: 11400000, guid: 6e3b24e1d5f88e64299c749bf2980717, type: 2}
+  afterSceneLoadListener: {fileID: 11400000, guid: 887e762afe09433469340f41c31c3617, type: 2}
 --- !u!114 &616367046
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1759,14 +1761,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d17dbde39414ab644b67957ea31bd56b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  oriScene: {fileID: 11400000, guid: 369dc1bc0bb497a4da897aec60f729ef, type: 2}
-  oriPosition: {x: 0.87, y: 4.001002, z: 0}
+  oriScene: {fileID: 11400000, guid: b7f02f285d6ff2f4eac7197eb9f61719, type: 2}
+  oriPosition: {x: -2.5784395, y: 1.0049945, z: 0}
   currentScene: {fileID: 0}
   currentPosition: {x: 0, y: 0, z: 0}
   fadeDuration: 1
   player: {fileID: 616367042}
-  transGateEventListener: {fileID: 11400000, guid: fa03e0b988ff2484cb3c28e68be341f6, type: 2}
-  afterSceneLoad: {fileID: 11400000, guid: 887e762afe09433469340f41c31c3617, type: 2}
+  sceneLoadEventListener: {fileID: 11400000, guid: 6e3b24e1d5f88e64299c749bf2980717, type: 2}
+  afterSceneLoadListener: {fileID: 11400000, guid: 887e762afe09433469340f41c31c3617, type: 2}
   fadeBroadcast: {fileID: 11400000, guid: 8be7ab0c5e293df4ab976d8334cd83dd, type: 2}
 --- !u!1 &1011144232
 GameObject:
@@ -2178,7 +2180,7 @@ Transform:
   m_GameObject: {fileID: 1104747566}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.86999905, y: 5, z: -10}
+  m_LocalPosition: {x: -0.910001, y: -8.81, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2838,7 +2840,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerStatebar: {fileID: 584288346}
-  healthChangeEvent: {fileID: 11400000, guid: 527d20d75ddbcb54ca9da07b5a9fce74, type: 2}
+  healthChangeListener: {fileID: 11400000, guid: 527d20d75ddbcb54ca9da07b5a9fce74, type: 2}
+  sceneLoadListener: {fileID: 11400000, guid: 6e3b24e1d5f88e64299c749bf2980717, type: 2}
 --- !u!4 &2018078819
 Transform:
   m_ObjectHideFlags: 0
