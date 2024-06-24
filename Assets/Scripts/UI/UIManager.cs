@@ -12,19 +12,42 @@ public class UIManager : MonoBehaviour
 
     private void OnEnable() {
         healthChangeListener.OnCharactorEventRaised += OnHealthChangeEvent;
-        sceneLoadListener.OnSceneLoadAction += OnSceneLoad;
+        sceneLoadListener.OnSceneLoadCompleteAction += OnSceneLoadComplete;
+        sceneLoadListener.OnSceneLoadRequestAction += OnSceneLoadRequest;
     }
 
     private void OnDisable() {
         healthChangeListener.OnCharactorEventRaised -= OnHealthChangeEvent;
-        sceneLoadListener.OnSceneLoadAction -= OnSceneLoad;
+        sceneLoadListener.OnSceneLoadCompleteAction -= OnSceneLoadComplete;
+        sceneLoadListener.OnSceneLoadRequestAction -= OnSceneLoadRequest;
     }
 
-    private void OnSceneLoad(SceneSO scene, Vector3 arg1, bool arg2)
+    /// <summary>
+    /// 场景切换时
+    /// 关闭血条
+    /// </summary>
+    /// <param name="arg0"></param>
+    /// <param name="arg1"></param>
+    /// <param name="arg2"></param>
+    private void OnSceneLoadRequest(SceneSO arg0, Vector3 arg1, bool arg2)
+    {
+        playerStatebar.gameObject.SetActive(false);
+    }
+
+
+    /// <summary>
+    /// 场景加载完成
+    /// 检查是否显示头像
+    /// </summary>
+    /// <param name="scene"></param>
+    private void OnSceneLoadComplete(SceneSO scene)
     {
         playerStatebar.gameObject.SetActive(scene.sceneType == SceneType.Scene);
     }
-
+    /// <summary>
+    /// 变更人物血量
+    /// </summary>
+    /// <param name="character"></param>
     public void OnHealthChangeEvent(Character character){
         playerStatebar.ChangeHealth(character.currentHealth/character.maxHealth);
     }

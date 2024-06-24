@@ -24,7 +24,7 @@ public class TransGate : MonoBehaviour, IInteractable
     public void OnInteractableConfirm()
     {
         //触发传送事件 传送地图，传送坐标，传送特效
-        transGateEventBroadcast.OnSceneLoadEventRaised(transToGo, positionToGo, transWithFade);
+        transGateEventBroadcast.OnSceneLoadRequestEventRaised(transToGo, positionToGo, transWithFade);
     }
     #endregion
 }

@@ -268,6 +268,7 @@ MonoBehaviour:
   onHealthChange:
     m_PersistentCalls:
       m_Calls: []
+  menuConfirmListener: {fileID: 11400000, guid: a5bfdf21122c91f4a95f3f6855a75695, type: 2}
 --- !u!114 &3328866864796186507
 MonoBehaviour:
   m_ObjectHideFlags: 0

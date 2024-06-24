@@ -21,12 +21,15 @@ public class Character : MonoBehaviour
     public UnityEvent onDie;
     [Header("改变血量事件")]
     public UnityEvent<Character> onHealthChange;
+    public MenuConfirmEventSO menuConfirmListener;
 
-    private void Start()
-    {
-        //游戏开始时，满血
-        currentHealth = maxHealth;
-        onHealthChange?.Invoke(this);
+
+    private void OnEnable() {
+        menuConfirmListener.onNewGameAction += OnNewGame;
+    }
+
+    private void OnDisable() {
+        menuConfirmListener.onNewGameAction -= OnNewGame;
     }
 
     private void Update()
@@ -37,6 +40,13 @@ public class Character : MonoBehaviour
             invincibleTimer -= Time.deltaTime;
         }
 
+    }
+    private void OnNewGame()
+    {   
+        Debug.Log("NewGame");
+        //游戏开始时，满血
+        currentHealth = maxHealth;
+        onHealthChange?.Invoke(this);
     }
 
     /// <summary>

@@ -10,9 +10,12 @@ using System;
 /// </summary>
 public class SceneManager : MonoBehaviour
 {
+    [Header("菜单场景和位置")]
+    public SceneSO menuScene;
+    public Vector3 menuPosition;
     [Header("起始场景和位置")]
-    public SceneSO oriScene;
-    public Vector3 oriPosition;
+    public SceneSO startScene;
+    public Vector3 startPosition;
     [Header("当前场景和位置")]
     public SceneSO currentScene;
     public Vector3 currentPosition;
@@ -23,7 +26,7 @@ public class SceneManager : MonoBehaviour
     [Header("事件监听")]
     public SceneLoadEventSO sceneLoadEventListener;
 
-    public VoidEventSO afterSceneLoadListener;
+    public MenuConfirmEventSO menuConfirmEventListener;
 
     [Header("事件广播")]
     public FadeChangeEventSO fadeBroadcast;
@@ -31,17 +34,20 @@ public class SceneManager : MonoBehaviour
 
     private void OnEnable()
     {
-        sceneLoadEventListener.OnSceneLoadAction += OnSceneLoad;
+        sceneLoadEventListener.OnSceneLoadRequestAction += OnSceneLoadRequest;
+        menuConfirmEventListener.onNewGameAction += OnNewGame;
     }
 
     private void OnDisable()
     {
-        sceneLoadEventListener.OnSceneLoadAction -= OnSceneLoad;
+        sceneLoadEventListener.OnSceneLoadRequestAction -= OnSceneLoadRequest;
+        menuConfirmEventListener.onNewGameAction -= OnNewGame;
     }
 
-    private void Start() {
-        
-        LoadOriScene();
+    private void Start()
+    {
+
+        LoadMenuScene();
     }
 
     /// <summary>
@@ -50,19 +56,19 @@ public class SceneManager : MonoBehaviour
     /// <param name="transScene"></param>
     /// <param name="transPosition"></param>
     /// <param name="fade"></param>
-    private void OnSceneLoad(SceneSO transScene, Vector3 transPosition, bool fade)
+    private void OnSceneLoadRequest(SceneSO transScene, Vector3 transPosition, bool fade)
     {
-        StartCoroutine(TransGateActive(transScene, transPosition, fade));
+        StartCoroutine(OnSceneChanging(transScene, transPosition, fade));
     }
 
     /// <summary>
     /// 协程内部完成场景切换
     /// </summary>
-    /// <param name="transScene"></param>
-    /// <param name="transPosition"></param>
+    /// <param name="sceneToGo"></param>
+    /// <param name="positionToGo"></param>
     /// <param name="fade"></param>
     /// <returns></returns>
-    private IEnumerator TransGateActive(SceneSO transScene, Vector3 transPosition, bool fade)
+    private IEnumerator OnSceneChanging(SceneSO sceneToGo, Vector3 positionToGo, bool fade)
     {
         //todo 渐入渐出
         if (fade)
@@ -70,38 +76,61 @@ public class SceneManager : MonoBehaviour
             fadeBroadcast.OnFadeOut(fadeDuration);
         }
         yield return new WaitForSeconds(fadeDuration);
-        //退出旧场景
-        yield return currentScene?.sceneReference?.UnLoadScene();
+
+        if (currentScene != null)
+        {
+            //退出旧场景
+            var oldScene = currentScene;
+            sceneLoadEventListener.OnSceneUnloadEventRaised(oldScene);
+            var unloadFuture = currentScene.sceneReference.UnLoadScene();
+            unloadFuture.Completed += (obj) =>
+            {
+                sceneLoadEventListener.OnSceneUnloadCompleteEventRaised(oldScene);
+            };
+            yield return unloadFuture;
+        }
+
         //加载新场景
-        currentScene = transScene;
+        currentScene = sceneToGo;
+        sceneLoadEventListener.OnSceneLoadEventRaised(currentScene, positionToGo, fade);
         var loadFuture = currentScene.sceneReference.LoadSceneAsync(LoadSceneMode.Additive);
         //加载完成处理
         loadFuture.Completed += (obj) =>
         {
-            //移动角色位置
-            player.position = transPosition;
-            currentPosition = transPosition;
             //场景加载完毕做处理
-            if (currentScene.sceneType == SceneType.Scene)
-            {
-                afterSceneLoadListener.RaiseEvent();
-            }
+            sceneLoadEventListener.OnSceneLoadCompleteEventRaised(currentScene);
+            //移动角色位置
+            player.position = positionToGo;
+            currentPosition = positionToGo;
+            // if (currentScene.sceneType == SceneType.Scene)
+            // {
+            //     afterSceneLoadListener.RaiseEvent();
+
+            // }
             //渐入渐出
             if (fade)
             {
                 fadeBroadcast.OnFadeIn(fadeDuration);
             }
         };
+        yield return loadFuture;
 
     }
 
     /// <summary>
     /// 加载第一个场景-菜单
     /// </summary>
-    private void LoadOriScene()
-    {   
+    private void LoadMenuScene()
+    {
         //直接调用事件本身来触发广播和事件
-        // StartCoroutine(TransGateActive(oriScene, oriPosition, true));
-        sceneLoadEventListener.OnSceneLoadEventRaised(oriScene, oriPosition, true);
+        sceneLoadEventListener.OnSceneLoadRequestEventRaised(menuScene, menuPosition, true);
+    }
+
+    /// <summary>
+    /// 加载新游戏场景
+    /// </summary>
+    private void OnNewGame()
+    {
+        sceneLoadEventListener.OnSceneLoadRequestEventRaised(startScene, startPosition, true);
     }
 }

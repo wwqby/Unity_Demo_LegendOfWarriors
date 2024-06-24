@@ -34,7 +34,6 @@ public class PlayerController : MonoBehaviour
 
     [Header("场景切换事件监听")]
     public SceneLoadEventSO sceneLoadEventListener;
-    public VoidEventSO afterSceneLoadListener;
 
 
     #endregion
@@ -56,20 +55,17 @@ public class PlayerController : MonoBehaviour
 
 
     private void OnEnable()
-    {   
-        Debug.Log("inputControls Enable");
+    {
         inputControls.Enable();
-        sceneLoadEventListener.OnSceneLoadAction += OnSceneLoadStart;
-        afterSceneLoadListener.OnVoidEventAction += OnSceneLoadEnd;
+        sceneLoadEventListener.OnSceneLoadRequestAction += OnSceneLoadStart;
+        sceneLoadEventListener.OnSceneLoadCompleteAction += OnSceneLoadEnd;
     }
 
-
     private void OnDisable()
-    {   
-        Debug.Log("inputControls Disable");
+    {
         inputControls.Disable();
-        sceneLoadEventListener.OnSceneLoadAction -= OnSceneLoadStart;
-        afterSceneLoadListener.OnVoidEventAction -= OnSceneLoadEnd;
+        sceneLoadEventListener.OnSceneLoadRequestAction -= OnSceneLoadStart;
+        sceneLoadEventListener.OnSceneLoadCompleteAction -= OnSceneLoadEnd;
     }
 
     private void Update()
@@ -131,9 +127,10 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     /// <param name="context"></param>
     private void OnPlayerAttack(InputAction.CallbackContext context)
-    {   
+    {
         //不允许空中攻击
-        if (!physicsCheck.isGround){
+        if (!physicsCheck.isGround)
+        {
             return;
         }
         playerAnimation.PlayerAttack();
@@ -170,6 +167,9 @@ public class PlayerController : MonoBehaviour
         inputControls.GamePlay.Disable();
     }
 
+
+
+
     /// <summary>
     /// 场景加载开始
     /// 禁止操作输入
@@ -179,21 +179,20 @@ public class PlayerController : MonoBehaviour
     /// <param name="arg2"></param>
     private void OnSceneLoadStart(SceneSO arg0, Vector3 arg1, bool arg2)
     {
-        Debug.Log("场景加载开始1");
         inputControls.GamePlay.Disable();
-        Debug.Log(inputControls.GamePlay.enabled);
-        Debug.Log("场景加载结束1");
     }
 
     /// <summary>
     /// 场景加载结束
     /// 打开操作输入
     /// </summary>
-     private void OnSceneLoadEnd()
+    private void OnSceneLoadEnd(SceneSO scene)
     {
-        Debug.Log("场景加载结束");
-        inputControls.GamePlay.Enable();
-        Debug.Log(inputControls.GamePlay.enabled);
+        if (scene.sceneType == SceneType.Scene)
+        {
+            inputControls.GamePlay.Enable();
+
+        }
     }
 
 
