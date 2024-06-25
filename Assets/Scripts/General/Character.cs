@@ -5,7 +5,7 @@ using UnityEngine.Events;
 /// <summary>
 /// 单位属性
 /// </summary>
-public class Character : MonoBehaviour
+public class Character : MonoBehaviour, ISavable
 {
     [Header("基本属性")]
     public float maxHealth;
@@ -26,10 +26,14 @@ public class Character : MonoBehaviour
 
     private void OnEnable() {
         menuConfirmListener.onNewGameAction += OnNewGame;
+        ISavable savable = this;
+        savable.RigisterData();
     }
 
     private void OnDisable() {
         menuConfirmListener.onNewGameAction -= OnNewGame;
+        ISavable savable = this;
+        savable.UnRigisterData();
     }
 
     private void Update()
@@ -92,6 +96,27 @@ public class Character : MonoBehaviour
             onHealthChange?.Invoke(this);
             onDie?.Invoke();
             return;
+        }
+    }
+
+    public DataDefination GetDataDefination()
+    {
+        return GetComponent<DataDefination>();
+    }
+
+    public void SaveData(DataModel dataModel)
+    {
+        if(dataModel.dataDict.ContainsKey(GetDataDefination().ID)){
+            dataModel.dataDict[GetDataDefination().ID] = this.transform.position;
+        }else{
+            dataModel.dataDict.Add(GetDataDefination().ID, this.transform.position);
+        }
+    }
+
+    public void LoadData(DataModel dataModel)
+    {
+        if(dataModel.dataDict.ContainsKey(GetDataDefination().ID)){
+            this.transform.position = dataModel.dataDict[GetDataDefination().ID];
         }
     }
 }

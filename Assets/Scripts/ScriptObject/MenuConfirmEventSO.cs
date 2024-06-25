@@ -18,6 +18,10 @@ public class MenuConfirmEventSO : ScriptableObject
     /// </summary>
     public UnityAction onLoadGameAction;
     /// <summary>
+    /// 返回菜单
+    /// </summary>
+    public UnityAction onBackMenuAction;
+    /// <summary>
     /// 退出游戏
     /// </summary>
     public UnityAction onQuitGameAction;
@@ -25,6 +29,10 @@ public class MenuConfirmEventSO : ScriptableObject
 
     public void OnNewGameActionRaised(){
         onNewGameAction.Invoke();
+    }
+
+    public void OnBackMenuActionRaised(){
+        onBackMenuAction.Invoke();
     }
 
     public void OnLoadGameActionRaised(){

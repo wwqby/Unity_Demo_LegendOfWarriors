@@ -28,19 +28,28 @@ public class SceneManager : MonoBehaviour
 
     [Header("事件广播")]
     public FadeChangeEventSO fadeBroadcast;
+    public DataEventSO dataBroadcast;
 
 
     private void OnEnable()
     {
-        sceneLoadEventListener.OnSceneLoadRequestAction += OnSceneLoadRequest;
         menuConfirmEventListener.onNewGameAction += OnNewGame;
+        menuConfirmEventListener.onLoadGameAction += OnLoadGame;
+        menuConfirmEventListener.onBackMenuAction += LoadMenuScene;
+        sceneLoadEventListener.OnSceneLoadRequestAction += OnSceneLoadRequest;
+        dataBroadcast.onDataSaveAction += OnDataSaveEvent;
     }
 
     private void OnDisable()
     {
-        sceneLoadEventListener.OnSceneLoadRequestAction -= OnSceneLoadRequest;
         menuConfirmEventListener.onNewGameAction -= OnNewGame;
+        menuConfirmEventListener.onLoadGameAction -= OnLoadGame;
+        menuConfirmEventListener.onBackMenuAction -= LoadMenuScene;
+        sceneLoadEventListener.OnSceneLoadRequestAction -= OnSceneLoadRequest;
+        dataBroadcast.onDataSaveAction -= OnDataSaveEvent;
     }
+
+
 
     private void Start()
     {
@@ -91,20 +100,16 @@ public class SceneManager : MonoBehaviour
         //加载新场景
         currentScene = sceneToGo;
         sceneLoadEventListener.OnSceneLoadEventRaised(currentScene, positionToGo, fade);
+        Debug.Log("场景切换currentScene = " + currentScene.sceneReference.ToString());
         var loadFuture = currentScene.sceneReference.LoadSceneAsync(LoadSceneMode.Additive);
         //加载完成处理
         loadFuture.Completed += (obj) =>
         {
-            //场景加载完毕做处理
-            sceneLoadEventListener.OnSceneLoadCompleteEventRaised(currentScene);
             //移动角色位置
             player.position = positionToGo;
             currentPosition = positionToGo;
-            // if (currentScene.sceneType == SceneType.Scene)
-            // {
-            //     afterSceneLoadListener.RaiseEvent();
-
-            // }
+            //场景加载完毕做处理
+            sceneLoadEventListener.OnSceneLoadCompleteEventRaised(currentScene);
             //渐入渐出
             if (fade)
             {
@@ -130,5 +135,31 @@ public class SceneManager : MonoBehaviour
     private void OnNewGame()
     {
         sceneLoadEventListener.OnSceneLoadRequestEventRaised(startScene, startScene.playerPosition, true);
+    }
+
+
+
+
+    /// <summary>
+    /// 保存游戏时，场景的数据
+    /// </summary>
+    private void OnDataSaveEvent()
+    {
+        DataManager.instance.SaveSceneData(currentScene);
+    }
+    /// <summary>
+    /// 继续游戏
+    /// </summary>
+    private void OnLoadGame()
+    {
+        SceneSO scene = DataManager.instance.getSceneData();
+        sceneLoadEventListener.OnSceneLoadCompleteAction += OnDataLoadEvent;
+        sceneLoadEventListener.OnSceneLoadRequestEventRaised(scene, scene.playerPosition, true);
+    }
+
+    private void OnDataLoadEvent(SceneSO arg0)
+    {
+        dataBroadcast.OnDataLoadEventRaised();
+        sceneLoadEventListener.OnSceneLoadCompleteAction -= OnDataLoadEvent;
     }
 }

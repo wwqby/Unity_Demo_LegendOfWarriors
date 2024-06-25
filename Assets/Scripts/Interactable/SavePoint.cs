@@ -10,6 +10,7 @@ public class SavePoint : MonoBehaviour, IInteractable
     public Sprite darkMark;
     public Sprite lightMark;
     public bool isDone;
+    public DataEventSO dataEventBroadcast;
 
 
     private void Awake()
@@ -32,6 +33,7 @@ public class SavePoint : MonoBehaviour, IInteractable
         saveMark.sprite = lightMark;
         lightObj.SetActive(isDone);
         //todo 保存进度
+        dataEventBroadcast.OnDataSaveEventRaised();
     }
 
 
