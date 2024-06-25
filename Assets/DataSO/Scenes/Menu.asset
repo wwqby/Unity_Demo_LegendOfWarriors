@@ -18,3 +18,4 @@ MonoBehaviour:
     m_SubObjectType: 
     m_EditorAssetChanged: 0
   sceneType: 1
+  playerPosition: {x: -3.28, y: 0.99, z: 0}

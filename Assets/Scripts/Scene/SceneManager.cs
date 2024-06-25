@@ -10,12 +10,10 @@ using System;
 /// </summary>
 public class SceneManager : MonoBehaviour
 {
-    [Header("菜单场景和位置")]
+    [Header("菜单场景")]
     public SceneSO menuScene;
-    public Vector3 menuPosition;
-    [Header("起始场景和位置")]
+    [Header("起始场景")]
     public SceneSO startScene;
-    public Vector3 startPosition;
     [Header("当前场景和位置")]
     public SceneSO currentScene;
     public Vector3 currentPosition;
@@ -123,7 +121,7 @@ public class SceneManager : MonoBehaviour
     private void LoadMenuScene()
     {
         //直接调用事件本身来触发广播和事件
-        sceneLoadEventListener.OnSceneLoadRequestEventRaised(menuScene, menuPosition, true);
+        sceneLoadEventListener.OnSceneLoadRequestEventRaised(menuScene, menuScene.playerPosition, true);
     }
 
     /// <summary>
@@ -131,6 +129,6 @@ public class SceneManager : MonoBehaviour
     /// </summary>
     private void OnNewGame()
     {
-        sceneLoadEventListener.OnSceneLoadRequestEventRaised(startScene, startPosition, true);
+        sceneLoadEventListener.OnSceneLoadRequestEventRaised(startScene, startScene.playerPosition, true);
     }
 }
