@@ -1762,9 +1762,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   menuScene: {fileID: 11400000, guid: b7f02f285d6ff2f4eac7197eb9f61719, type: 2}
-  menuPosition: {x: -3.28, y: 0.99, z: 0}
   startScene: {fileID: 11400000, guid: 369dc1bc0bb497a4da897aec60f729ef, type: 2}
-  startPosition: {x: 0.1, y: 4.08, z: 0}
   currentScene: {fileID: 0}
   currentPosition: {x: 0, y: 0, z: 0}
   fadeDuration: 1
