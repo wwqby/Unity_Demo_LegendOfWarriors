@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -14,6 +15,7 @@ public class DataManager : MonoBehaviour
 
     [Header("事件监听")]
     public DataEventSO dataEventListener;
+    public SceneLoadEventSO sceneLoadListener;
     public MenuConfirmEventSO menuConfirmBroadcast;
     [Header("数据管理队列")]
     private List<ISavable> savableDataList;
@@ -56,6 +58,10 @@ public class DataManager : MonoBehaviour
         }
     }
 
+    public SceneSO GetLastScene(){
+        return dataModel.GetSceneDataObj();
+    }
+
 
     public void RegisterISavableData(ISavable savable)
     {
@@ -70,27 +76,20 @@ public class DataManager : MonoBehaviour
         savableDataList.Remove(savable);
     }
 
-    /// <summary>
-    /// 保存场景
-    /// </summary>
-    /// <param name="scene"></param>
-    public void SaveSceneData(SceneSO scene)
-    {
-        dataModel.lastScene = scene;
-    }
 
-    public SceneSO getSceneData()
-    {
-        return dataModel.lastScene;
-    }
     private void OnDataLoadEvent()
     {
         Debug.Log("数据加载");
-        foreach (var item in savableDataList)
-        {
-            item.LoadData(dataModel);
+        //先加载场景数据
+        var sceneManager = savableDataList.Find(obj=>obj is SceneManager) as SceneManager;
+        if(sceneManager != null){
+            //先绑定场景加载完成时通知事件
+            sceneLoadListener.OnSceneLoadCompleteAction += OnSceneLoadComplete;
+            Debug.Log("LoadData");
+            sceneManager.LoadData(dataModel);
         }
     }
+
 
     private void OnDataSaveEvent()
     {
@@ -100,4 +99,19 @@ public class DataManager : MonoBehaviour
             item.SaveData(dataModel);
         }
     }
+
+    private void OnSceneLoadComplete(SceneSO arg0)
+    {
+        foreach (var item in savableDataList)
+        {
+            //场景数据跳过
+            if(item is SceneManager){
+                continue;
+            }
+            item.LoadData(dataModel);
+        }
+        //解绑事件监听
+        sceneLoadListener.OnSceneLoadCompleteAction -= OnSceneLoadComplete;
+    }
+
 }

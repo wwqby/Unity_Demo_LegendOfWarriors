@@ -8,7 +8,7 @@ using System;
 /// <summary>
 /// 管理场景切换
 /// </summary>
-public class SceneManager : MonoBehaviour
+public class SceneManager : MonoBehaviour, ISavable
 {
     [Header("菜单场景")]
     public SceneSO menuScene;
@@ -34,19 +34,19 @@ public class SceneManager : MonoBehaviour
     private void OnEnable()
     {
         menuConfirmEventListener.onNewGameAction += OnNewGame;
-        menuConfirmEventListener.onLoadGameAction += OnLoadGame;
         menuConfirmEventListener.onBackMenuAction += LoadMenuScene;
         sceneLoadEventListener.OnSceneLoadRequestAction += OnSceneLoadRequest;
-        dataBroadcast.onDataSaveAction += OnDataSaveEvent;
+        ISavable savable = this;
+        savable.RigisterData();
     }
 
     private void OnDisable()
     {
         menuConfirmEventListener.onNewGameAction -= OnNewGame;
-        menuConfirmEventListener.onLoadGameAction -= OnLoadGame;
         menuConfirmEventListener.onBackMenuAction -= LoadMenuScene;
         sceneLoadEventListener.OnSceneLoadRequestAction -= OnSceneLoadRequest;
-        dataBroadcast.onDataSaveAction -= OnDataSaveEvent;
+        ISavable savable = this;
+        savable.UnRigisterData();
     }
 
 
@@ -139,27 +139,23 @@ public class SceneManager : MonoBehaviour
 
 
 
-
-    /// <summary>
-    /// 保存游戏时，场景的数据
-    /// </summary>
-    private void OnDataSaveEvent()
+    public DataDefination GetDataDefination()
     {
-        DataManager.instance.SaveSceneData(currentScene);
-    }
-    /// <summary>
-    /// 继续游戏
-    /// </summary>
-    private void OnLoadGame()
-    {
-        SceneSO scene = DataManager.instance.getSceneData();
-        sceneLoadEventListener.OnSceneLoadCompleteAction += OnDataLoadEvent;
-        sceneLoadEventListener.OnSceneLoadRequestEventRaised(scene, scene.playerPosition, true);
+        return GetComponent<DataDefination>();
     }
 
-    private void OnDataLoadEvent(SceneSO arg0)
+    public void SaveData(DataModel dataModel)
     {
-        dataBroadcast.OnDataLoadEventRaised();
-        sceneLoadEventListener.OnSceneLoadCompleteAction -= OnDataLoadEvent;
+        dataModel.lastSceneObj = dataModel.getSceneDataString(currentScene);
     }
+
+    public void LoadData(DataModel dataModel)
+    {
+        var lastScene = dataModel.GetSceneDataObj();
+        if (lastScene != null)
+        {
+            sceneLoadEventListener.OnSceneLoadRequestEventRaised(lastScene, lastScene.playerPosition, true);
+        }
+    }
+
 }

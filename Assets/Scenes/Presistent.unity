@@ -899,6 +899,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dataEventListener: {fileID: 11400000, guid: 49fa462b3368b094e94671bd803ebf14, type: 2}
+  sceneLoadListener: {fileID: 11400000, guid: 6e3b24e1d5f88e64299c749bf2980717, type: 2}
   menuConfirmBroadcast: {fileID: 11400000, guid: a5bfdf21122c91f4a95f3f6855a75695, type: 2}
 --- !u!4 &400104593
 Transform:
@@ -1833,6 +1834,7 @@ GameObject:
   m_Component:
   - component: {fileID: 991299215}
   - component: {fileID: 991299216}
+  - component: {fileID: 991299217}
   m_Layer: 0
   m_Name: SceneManager
   m_TagString: Untagged
@@ -1877,6 +1879,20 @@ MonoBehaviour:
   menuConfirmEventListener: {fileID: 11400000, guid: a5bfdf21122c91f4a95f3f6855a75695, type: 2}
   fadeBroadcast: {fileID: 11400000, guid: 8be7ab0c5e293df4ab976d8334cd83dd, type: 2}
   dataBroadcast: {fileID: 11400000, guid: 49fa462b3368b094e94671bd803ebf14, type: 2}
+--- !u!114 &991299217
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 991299213}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e70e7a88ce8a6e54786495ad1bd2c782, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clear: 0
+  ID: 2291b5f8-3051-4cde-87aa-1beca90637db
 --- !u!1 &1011144232
 GameObject:
   m_ObjectHideFlags: 0

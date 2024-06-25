@@ -1802,6 +1802,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   menuConfirmEventListener: {fileID: 11400000, guid: a5bfdf21122c91f4a95f3f6855a75695, type: 2}
   buttonNewGame: {fileID: 5137220}
+  buttonLoadGame: {fileID: 771419527}
 --- !u!1 &669516252
 GameObject:
   m_ObjectHideFlags: 0
@@ -2208,9 +2209,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 11400000, guid: a5bfdf21122c91f4a95f3f6855a75695, type: 2}
-        m_TargetAssemblyTypeName: MenuConfirmEventSO, Assembly-CSharp
-        m_MethodName: OnLoadGameActionRaised
+      - m_Target: {fileID: 11400000, guid: 49fa462b3368b094e94671bd803ebf14, type: 2}
+        m_TargetAssemblyTypeName: DataEventSO, Assembly-CSharp
+        m_MethodName: OnDataLoadEventRaised
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
