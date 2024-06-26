@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,23 +16,29 @@ public class Character : MonoBehaviour, ISavable
     private float invincibleTimer;
     //get属性
     public bool isInvincible { get { return invincibleTimer > 0; } }
+    [Header("菜单事件")]
+    public MenuConfirmEventSO menuConfirmListener;
+    public SceneLoadEventSO sceneLoadListener;
     [Header("受伤事件")]
     public UnityEvent<Transform> onTakeDamage;
     [Header("死亡事件")]
     public UnityEvent onDie;
     [Header("改变血量事件")]
     public UnityEvent<Character> onHealthChange;
-    public MenuConfirmEventSO menuConfirmListener;
 
 
-    private void OnEnable() {
-        menuConfirmListener.onNewGameAction += OnNewGame;
+    private void OnEnable()
+    {
+        if (DataManager.instance.isNew)
+        {
+            OnNewGame();
+        }
         ISavable savable = this;
         savable.RigisterData();
     }
 
-    private void OnDisable() {
-        menuConfirmListener.onNewGameAction -= OnNewGame;
+    private void OnDisable()
+    {
         ISavable savable = this;
         savable.UnRigisterData();
     }
@@ -45,13 +52,7 @@ public class Character : MonoBehaviour, ISavable
         }
 
     }
-    private void OnNewGame()
-    {   
-        Debug.Log("NewGame");
-        //游戏开始时，满血
-        currentHealth = maxHealth;
-        onHealthChange?.Invoke(this);
-    }
+
 
     /// <summary>
     /// 收到攻击事件
@@ -59,7 +60,7 @@ public class Character : MonoBehaviour, ISavable
     /// <param name="attack"> 受攻击对象</param>
     public void TakeDamage(Attack attack)
     {
-        Debug.Log(gameObject.name + "受到攻击:"+attack.damage);
+        Debug.Log(gameObject.name + "受到攻击:" + attack.damage);
         if (isInvincible)
         {
             return;
@@ -90,14 +91,34 @@ public class Character : MonoBehaviour, ISavable
     }
 
 
-    private void OnTriggerStay2D(Collider2D other) {
-        if (other.CompareTag("Water")){
+    private void OnTriggerStay2D(Collider2D other)
+    {
+        if (other.CompareTag("Water"))
+        {
+            //已经死亡旧跳过
+            if (currentHealth == 0)
+            {
+                return;
+            }
+            //判定死亡
             currentHealth = 0;
+            Debug.Log("落水死亡");
             onHealthChange?.Invoke(this);
             onDie?.Invoke();
             return;
         }
     }
+
+    /// <summary>
+    /// 监听菜单新游戏
+    /// </summary>
+    public void OnNewGame()
+    {
+        currentHealth = maxHealth;
+        onHealthChange?.Invoke(this);
+        Debug.Log("新游戏" + gameObject.name + "血量："+ currentHealth);
+    }
+
 
     public DataDefination GetDataDefination()
     {
@@ -106,17 +127,29 @@ public class Character : MonoBehaviour, ISavable
 
     public void SaveData(DataModel dataModel)
     {
-        if(dataModel.dataDict.ContainsKey(GetDataDefination().ID)){
+        if (dataModel.dataDict.ContainsKey(GetDataDefination().ID))
+        {
             dataModel.dataDict[GetDataDefination().ID] = this.transform.position;
-        }else{
+            dataModel.floatDataDict[GetDataDefination().ID + DataModel.HEALTH] = currentHealth;
+        }
+        else
+        {
             dataModel.dataDict.Add(GetDataDefination().ID, this.transform.position);
+            dataModel.floatDataDict.Add(GetDataDefination().ID + DataModel.HEALTH, currentHealth);
         }
     }
 
     public void LoadData(DataModel dataModel)
     {
-        if(dataModel.dataDict.ContainsKey(GetDataDefination().ID)){
+        if (dataModel.dataDict.ContainsKey(GetDataDefination().ID))
+        {
             this.transform.position = dataModel.dataDict[GetDataDefination().ID];
+            currentHealth = dataModel.floatDataDict[GetDataDefination().ID + DataModel.HEALTH];
+            Debug.Log("加载数据_血量" + currentHealth);
+            onHealthChange?.Invoke(this);
         }
     }
+
+
+
 }

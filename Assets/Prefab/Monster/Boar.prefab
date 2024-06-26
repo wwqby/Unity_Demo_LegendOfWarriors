@@ -236,6 +236,8 @@ MonoBehaviour:
   maxHealth: 50
   currentHealth: 0
   invincibleDuration: 0.5
+  menuConfirmListener: {fileID: 11400000, guid: a5bfdf21122c91f4a95f3f6855a75695, type: 2}
+  sceneLoadListener: {fileID: 11400000, guid: 6e3b24e1d5f88e64299c749bf2980717, type: 2}
   onTakeDamage:
     m_PersistentCalls:
       m_Calls:
@@ -269,7 +271,6 @@ MonoBehaviour:
   onHealthChange:
     m_PersistentCalls:
       m_Calls: []
-  menuConfirmListener: {fileID: 11400000, guid: a5bfdf21122c91f4a95f3f6855a75695, type: 2}
 --- !u!114 &3328866864796186507
 MonoBehaviour:
   m_ObjectHideFlags: 0

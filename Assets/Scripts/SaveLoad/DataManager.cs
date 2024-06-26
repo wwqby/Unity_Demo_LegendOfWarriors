@@ -17,10 +17,13 @@ public class DataManager : MonoBehaviour
     public DataEventSO dataEventListener;
     public SceneLoadEventSO sceneLoadListener;
     public MenuConfirmEventSO menuConfirmBroadcast;
+    [Header("是否新游戏")]
+    public bool isNew;
     [Header("数据管理队列")]
     private List<ISavable> savableDataList;
 
     private DataModel dataModel;
+
 
     private void Awake()
     {
@@ -40,14 +43,21 @@ public class DataManager : MonoBehaviour
     {
         dataEventListener.onDataLoadAction += OnDataLoadEvent;
         dataEventListener.onDataSaveAction += OnDataSaveEvent;
+        menuConfirmBroadcast.onNewGameAction += OnNewGame;
+        menuConfirmBroadcast.onLoadGameAction += OnLoadGame;
     }
 
     private void OnDisable()
     {
         dataEventListener.onDataLoadAction -= OnDataLoadEvent;
         dataEventListener.onDataSaveAction -= OnDataSaveEvent;
+        menuConfirmBroadcast.onNewGameAction -= OnNewGame;
+        menuConfirmBroadcast.onLoadGameAction -= OnLoadGame;
+        //确保本对象被销毁时解除绑定
+        sceneLoadListener.OnSceneLoadCompleteAction -= OnSceneLoadComplete;
     }
 
+    
 
     private void Update()
     {
@@ -112,6 +122,17 @@ public class DataManager : MonoBehaviour
         }
         //解绑事件监听
         sceneLoadListener.OnSceneLoadCompleteAction -= OnSceneLoadComplete;
+    }
+
+
+    private void OnLoadGame()
+    {
+       isNew = false;
+    }
+
+    private void OnNewGame()
+    {
+        isNew = true;
     }
 
 }

@@ -167,6 +167,12 @@ public class PlayerController : MonoBehaviour
         inputControls.GamePlay.Disable();
     }
 
+    public void OnRevive()
+    {
+        isDead = false;
+        inputControls.GamePlay.Enable();
+    }
+
 
 
 
@@ -190,10 +196,10 @@ public class PlayerController : MonoBehaviour
     {
         if (scene.sceneType == SceneType.Scene)
         {
-            inputControls.GamePlay.Enable();
-
+            OnRevive();
         }
     }
+
 
 
     #endregion

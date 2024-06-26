@@ -2209,9 +2209,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 11400000, guid: 49fa462b3368b094e94671bd803ebf14, type: 2}
-        m_TargetAssemblyTypeName: DataEventSO, Assembly-CSharp
-        m_MethodName: OnDataLoadEventRaised
+      - m_Target: {fileID: 11400000, guid: a5bfdf21122c91f4a95f3f6855a75695, type: 2}
+        m_TargetAssemblyTypeName: MenuConfirmEventSO, Assembly-CSharp
+        m_MethodName: OnLoadGameActionRaised
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4786,7 +4786,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5542105385027372051, guid: 815deb52c790e33448a8c2d882b0c34d, type: 3}
       propertyPath: m_Name
-      value: Boar
+      value: Boar0_0
       objectReference: {fileID: 0}
     - target: {fileID: 5542105385027372051, guid: 815deb52c790e33448a8c2d882b0c34d, type: 3}
       propertyPath: m_IsActive

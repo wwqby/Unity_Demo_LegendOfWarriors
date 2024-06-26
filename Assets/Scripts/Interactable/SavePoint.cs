@@ -21,14 +21,11 @@ public class SavePoint : MonoBehaviour, IInteractable
 
     public bool CanInteractable()
     {
-        return !isDone;
+        return true;
     }
 
     public void OnInteractableConfirm()
     {
-        if(isDone){
-            return;
-        }
         isDone = true;
         saveMark.sprite = lightMark;
         lightObj.SetActive(isDone);

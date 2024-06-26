@@ -4,8 +4,12 @@ using UnityEngine;
 
 public class DataModel
 {
+
+
+    public const string HEALTH = "_health";
     public string lastSceneObj;
     public Dictionary<string, Vector3> dataDict = new Dictionary<string, Vector3>();
+    public Dictionary<string, float> floatDataDict = new Dictionary<string, float>();
 
 
     /// <summary>

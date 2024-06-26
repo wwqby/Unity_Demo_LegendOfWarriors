@@ -34,6 +34,7 @@ public class SceneManager : MonoBehaviour, ISavable
     private void OnEnable()
     {
         menuConfirmEventListener.onNewGameAction += OnNewGame;
+        menuConfirmEventListener.onLoadGameAction += OnLoadGame;
         menuConfirmEventListener.onBackMenuAction += LoadMenuScene;
         sceneLoadEventListener.OnSceneLoadRequestAction += OnSceneLoadRequest;
         ISavable savable = this;
@@ -43,6 +44,7 @@ public class SceneManager : MonoBehaviour, ISavable
     private void OnDisable()
     {
         menuConfirmEventListener.onNewGameAction -= OnNewGame;
+        menuConfirmEventListener.onLoadGameAction -= OnLoadGame;
         menuConfirmEventListener.onBackMenuAction -= LoadMenuScene;
         sceneLoadEventListener.OnSceneLoadRequestAction -= OnSceneLoadRequest;
         ISavable savable = this;
@@ -89,6 +91,7 @@ public class SceneManager : MonoBehaviour, ISavable
             //退出旧场景
             var oldScene = currentScene;
             sceneLoadEventListener.OnSceneUnloadEventRaised(oldScene);
+            player.gameObject.SetActive(false);
             var unloadFuture = currentScene.sceneReference.UnLoadScene();
             unloadFuture.Completed += (obj) =>
             {
@@ -106,6 +109,7 @@ public class SceneManager : MonoBehaviour, ISavable
         loadFuture.Completed += (obj) =>
         {
             //移动角色位置
+            player.gameObject.SetActive(true);
             player.position = positionToGo;
             currentPosition = positionToGo;
             //场景加载完毕做处理
@@ -137,6 +141,13 @@ public class SceneManager : MonoBehaviour, ISavable
         sceneLoadEventListener.OnSceneLoadRequestEventRaised(startScene, startScene.playerPosition, true);
     }
 
+    /// <summary>
+    /// 继续游戏
+    /// </summary>
+    private void OnLoadGame()
+    {
+        dataBroadcast.OnDataLoadEventRaised();
+    }
 
 
     public DataDefination GetDataDefination()
@@ -152,9 +163,15 @@ public class SceneManager : MonoBehaviour, ISavable
     public void LoadData(DataModel dataModel)
     {
         var lastScene = dataModel.GetSceneDataObj();
-        if (lastScene != null)
+        if (lastScene.sceneReference != null)
         {
+            //有存档
             sceneLoadEventListener.OnSceneLoadRequestEventRaised(lastScene, lastScene.playerPosition, true);
+        }
+        else
+        {
+            //没有查到存档,启动新游戏
+            menuConfirmEventListener.OnNewGameActionRaised();
         }
     }
 

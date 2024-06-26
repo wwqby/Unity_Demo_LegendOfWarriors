@@ -5,7 +5,10 @@ using UnityEngine;
 
 public class UIManager : MonoBehaviour
 {   
+    [Header("状态条")]
     public PlayerStatebar playerStatebar;
+    [Header("游戏结束面板")]
+    public GameObject gameOverPanel;
     [Header("事件监听")]
     public CharactorEventSO healthChangeListener;
     public SceneLoadEventSO sceneLoadListener;
@@ -32,6 +35,7 @@ public class UIManager : MonoBehaviour
     private void OnSceneLoadRequest(SceneSO arg0, Vector3 arg1, bool arg2)
     {
         playerStatebar.gameObject.SetActive(false);
+        gameOverPanel.SetActive(false);
     }
 
 
@@ -43,6 +47,7 @@ public class UIManager : MonoBehaviour
     private void OnSceneLoadComplete(SceneSO scene)
     {
         playerStatebar.gameObject.SetActive(scene.sceneType == SceneType.Scene);
+        gameOverPanel.SetActive(false);
     }
     /// <summary>
     /// 变更人物血量
