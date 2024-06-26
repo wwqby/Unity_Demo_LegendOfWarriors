@@ -12,18 +12,24 @@ public class UIManager : MonoBehaviour
     [Header("事件监听")]
     public CharactorEventSO healthChangeListener;
     public SceneLoadEventSO sceneLoadListener;
+    public GameStatusEventSO gameStatusEventListener;
 
     private void OnEnable() {
         healthChangeListener.OnCharactorEventRaised += OnHealthChangeEvent;
         sceneLoadListener.OnSceneLoadCompleteAction += OnSceneLoadComplete;
         sceneLoadListener.OnSceneLoadRequestAction += OnSceneLoadRequest;
+
+        gameStatusEventListener.OnGameOverAction += OnGameOverEvent;
     }
 
     private void OnDisable() {
         healthChangeListener.OnCharactorEventRaised -= OnHealthChangeEvent;
         sceneLoadListener.OnSceneLoadCompleteAction -= OnSceneLoadComplete;
         sceneLoadListener.OnSceneLoadRequestAction -= OnSceneLoadRequest;
+        gameStatusEventListener.OnGameOverAction -= OnGameOverEvent;
     }
+
+
 
     /// <summary>
     /// 场景切换时
@@ -55,5 +61,14 @@ public class UIManager : MonoBehaviour
     /// <param name="character"></param>
     public void OnHealthChangeEvent(Character character){
         playerStatebar.ChangeHealth(character.currentHealth/character.maxHealth);
+    }
+
+    /// <summary>
+    /// 游戏结束
+    /// </summary>
+    private void OnGameOverEvent()
+    {
+        gameOverPanel.SetActive(true);
+        playerStatebar.gameObject.SetActive(false);
     }
 }

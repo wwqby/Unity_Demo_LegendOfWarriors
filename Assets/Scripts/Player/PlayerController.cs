@@ -194,9 +194,11 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     private void OnSceneLoadEnd(SceneSO scene)
     {
-        if (scene.sceneType == SceneType.Scene)
+        OnRevive();
+        if (scene.sceneType == SceneType.Menu)
         {
-            OnRevive();
+            //菜单界面禁止操作
+            inputControls.GamePlay.Disable();
         }
     }
 

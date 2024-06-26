@@ -57,7 +57,6 @@ public class DataManager : MonoBehaviour
         sceneLoadListener.OnSceneLoadCompleteAction -= OnSceneLoadComplete;
     }
 
-    
 
     private void Update()
     {
@@ -134,5 +133,8 @@ public class DataManager : MonoBehaviour
     {
         isNew = true;
     }
+
+
+
 
 }

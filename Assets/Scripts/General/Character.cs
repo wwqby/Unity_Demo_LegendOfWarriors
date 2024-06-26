@@ -37,6 +37,8 @@ public class Character : MonoBehaviour, ISavable
         savable.RigisterData();
     }
 
+
+
     private void OnDisable()
     {
         ISavable savable = this;
@@ -109,6 +111,8 @@ public class Character : MonoBehaviour, ISavable
         }
     }
 
+
+    
     /// <summary>
     /// 监听菜单新游戏
     /// </summary>
@@ -116,7 +120,7 @@ public class Character : MonoBehaviour, ISavable
     {
         currentHealth = maxHealth;
         onHealthChange?.Invoke(this);
-        Debug.Log("新游戏" + gameObject.name + "血量："+ currentHealth);
+        Debug.Log("新游戏" + gameObject.name + "血量：" + currentHealth);
     }
 
 
