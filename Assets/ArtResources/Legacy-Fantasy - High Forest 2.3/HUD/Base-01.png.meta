@@ -800,7 +800,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Base-01_32
+      name: circle_blue
       rect:
         serializedVersion: 2
         x: 33
@@ -863,7 +863,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Base-01_35
+      name: close_btn
       rect:
         serializedVersion: 2
         x: 20
@@ -1388,7 +1388,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Base-01_60
+      name: setting_btn
       rect:
         serializedVersion: 2
         x: 50
@@ -1902,10 +1902,8 @@ TextureImporter:
       Base-01_3: 315581906
       Base-01_30: 1656468287
       Base-01_31: 1914626809
-      Base-01_32: -927260661
       Base-01_33: 1528468293
       Base-01_34: -345527723
-      Base-01_35: -1820907944
       Base-01_36: -1899453291
       Base-01_37: 968702283
       Base-01_38: 330593478
@@ -1932,7 +1930,6 @@ TextureImporter:
       Base-01_58: -1642054422
       Base-01_59: -1221947662
       Base-01_6: -1766528749
-      Base-01_60: -2040156520
       Base-01_61: -587317648
       Base-01_63: 2093585993
       Base-01_64: 1390856904
@@ -1957,12 +1954,15 @@ TextureImporter:
       Base-01_HealthRed: 1065866681
       Base-01_PowerBlue: 1157195804
       Base-01_PowerYellow: -868896203
+      circle_blue: -927260661
+      close_btn: -1820907944
       screen_blue: 1155192710
       screen_brown: -2048091457
       screen_green: -986888162
       screen_red: -1231709506
       screen_stick: -335925943
       screen_yellow: -2020303545
+      setting_btn: -2040156520
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

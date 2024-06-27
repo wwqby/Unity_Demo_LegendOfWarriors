@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 /// <summary>
@@ -14,7 +15,7 @@ public class MenuConfirmEventSO : ScriptableObject
     /// </summary>
     public UnityAction onNewGameAction;
     /// <summary>
-    /// 继续游戏
+    /// 载入游戏存档
     /// </summary>
     public UnityAction onLoadGameAction;
     /// <summary>
@@ -25,6 +26,14 @@ public class MenuConfirmEventSO : ScriptableObject
     /// 退出游戏
     /// </summary>
     public UnityAction onQuitGameAction;
+    /// <summary>
+    /// 暂停游戏
+    /// </summary>
+    public UnityAction onPauseGameAction;
+    /// <summary>
+    /// 恢复游戏
+    /// </summary>
+    public UnityAction onResumeGameAction;
 
 
     public void OnNewGameActionRaised(){
@@ -41,5 +50,15 @@ public class MenuConfirmEventSO : ScriptableObject
 
     public void OnQuitGameActionRaised(){
         onQuitGameAction.Invoke();
+    }
+
+
+    public void OnPauseGameActionRaised(){
+        onPauseGameAction.Invoke();
+    }
+
+
+    public void OnResumeGameActionRaised(){
+        onResumeGameAction.Invoke();
     }
 }
