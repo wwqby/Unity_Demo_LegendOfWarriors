@@ -24,7 +24,7 @@ public class SceneManager : MonoBehaviour, ISavable
     [Header("事件监听")]
     public SceneLoadEventSO sceneLoadEventListener;
 
-    public MenuConfirmEventSO menuConfirmEventListener;
+    public MenuConfirmEventSO menuConfirmEvent;
 
     [Header("事件广播")]
     public FadeChangeEventSO fadeBroadcast;
@@ -32,10 +32,11 @@ public class SceneManager : MonoBehaviour, ISavable
 
 
     private void OnEnable()
-    {
-        menuConfirmEventListener.onNewGameAction += OnNewGame;
-        menuConfirmEventListener.onLoadGameAction += OnLoadGame;
-        menuConfirmEventListener.onBackMenuAction += LoadMenuScene;
+    {   
+        Debug.Log("SceneManager OnEnable");
+        menuConfirmEvent.onNewGameAction += OnNewGame;
+        menuConfirmEvent.onLoadGameAction += OnLoadGame;
+        menuConfirmEvent.onBackMenuAction += LoadMenuScene;
         sceneLoadEventListener.OnSceneLoadRequestAction += OnSceneLoadRequest;
         ISavable savable = this;
         savable.RigisterData();
@@ -43,9 +44,10 @@ public class SceneManager : MonoBehaviour, ISavable
 
     private void OnDisable()
     {
-        menuConfirmEventListener.onNewGameAction -= OnNewGame;
-        menuConfirmEventListener.onLoadGameAction -= OnLoadGame;
-        menuConfirmEventListener.onBackMenuAction -= LoadMenuScene;
+        Debug.Log("SceneManager OnDisable");
+        menuConfirmEvent.onNewGameAction -= OnNewGame;
+        menuConfirmEvent.onLoadGameAction -= OnLoadGame;
+        menuConfirmEvent.onBackMenuAction -= LoadMenuScene;
         sceneLoadEventListener.OnSceneLoadRequestAction -= OnSceneLoadRequest;
         ISavable savable = this;
         savable.UnRigisterData();
@@ -171,7 +173,7 @@ public class SceneManager : MonoBehaviour, ISavable
         else
         {
             //没有查到存档,启动新游戏
-            menuConfirmEventListener.OnNewGameActionRaised();
+            menuConfirmEvent.OnNewGameActionRaised();
         }
     }
 

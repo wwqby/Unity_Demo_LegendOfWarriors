@@ -3016,7 +3016,7 @@ MonoBehaviour:
   fadeDuration: 1
   player: {fileID: 616367042}
   sceneLoadEventListener: {fileID: 11400000, guid: 6e3b24e1d5f88e64299c749bf2980717, type: 2}
-  menuConfirmEventListener: {fileID: 11400000, guid: a5bfdf21122c91f4a95f3f6855a75695, type: 2}
+  menuConfirmEvent: {fileID: 11400000, guid: a5bfdf21122c91f4a95f3f6855a75695, type: 2}
   fadeBroadcast: {fileID: 11400000, guid: 8be7ab0c5e293df4ab976d8334cd83dd, type: 2}
   dataBroadcast: {fileID: 11400000, guid: 49fa462b3368b094e94671bd803ebf14, type: 2}
 --- !u!114 &991299217
