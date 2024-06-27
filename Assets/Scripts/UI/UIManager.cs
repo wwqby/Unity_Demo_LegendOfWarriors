@@ -9,16 +9,25 @@ public class UIManager : MonoBehaviour
     public PlayerStatebar playerStatebar;
     [Header("游戏结束面板")]
     public GameObject gameOverPanel;
+    [Header("模拟手柄面板")]
+    public GameObject mobileTouchPanel;
     [Header("事件监听")]
     public CharactorEventSO healthChangeListener;
     public SceneLoadEventSO sceneLoadListener;
     public GameStatusEventSO gameStatusEventListener;
 
+    private void Awake() {
+        //如果是桌面端，隐藏触摸面板
+        #if UNITY_STANDALONE || UNITY_WEBGL
+            mobileTouchPanel.SetActive(false);
+        #endif    
+    }
+
+
     private void OnEnable() {
         healthChangeListener.OnCharactorEventRaised += OnHealthChangeEvent;
         sceneLoadListener.OnSceneLoadCompleteAction += OnSceneLoadComplete;
         sceneLoadListener.OnSceneLoadRequestAction += OnSceneLoadRequest;
-
         gameStatusEventListener.OnGameOverAction += OnGameOverEvent;
     }
 

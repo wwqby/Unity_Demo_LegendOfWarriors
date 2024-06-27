@@ -106,6 +106,45 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: iPhone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
@@ -152,7 +191,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Base-01_2
+      name: screen_stick
       rect:
         serializedVersion: 2
         x: 374
@@ -299,7 +338,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Base-01_10
+      name: screen_green
       rect:
         serializedVersion: 2
         x: 140
@@ -656,7 +695,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Base-01_27
+      name: screen_blue
       rect:
         serializedVersion: 2
         x: 140
@@ -1055,7 +1094,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Base-01_46
+      name: screen_yellow
       rect:
         serializedVersion: 2
         x: 140
@@ -1391,7 +1430,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Base-01_62
+      name: screen_brown
       rect:
         serializedVersion: 2
         x: 140
@@ -1727,7 +1766,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Base-01_78
+      name: screen_red
       rect:
         serializedVersion: 2
         x: 140
@@ -1844,7 +1883,6 @@ TextureImporter:
     nameFileIdTable:
       Base-01_0: -902234932
       Base-01_1: 295214266
-      Base-01_10: -986888162
       Base-01_11: 1857271360
       Base-01_12: 651358248
       Base-01_13: -94521960
@@ -1853,7 +1891,6 @@ TextureImporter:
       Base-01_17: -845622463
       Base-01_18: -1076782115
       Base-01_19: -1044192591
-      Base-01_2: -335925943
       Base-01_20: 1207331664
       Base-01_21: 1803034937
       Base-01_22: 949141080
@@ -1861,7 +1898,6 @@ TextureImporter:
       Base-01_24: 393653743
       Base-01_25: -157133697
       Base-01_26: -952573051
-      Base-01_27: 1155192710
       Base-01_28: 1750981525
       Base-01_3: 315581906
       Base-01_30: 1656468287
@@ -1881,7 +1917,6 @@ TextureImporter:
       Base-01_43: -1819669505
       Base-01_44: -220127467
       Base-01_45: 1550714427
-      Base-01_46: -2020303545
       Base-01_47: 624881766
       Base-01_48: 137846069
       Base-01_49: -1894544587
@@ -1899,7 +1934,6 @@ TextureImporter:
       Base-01_6: -1766528749
       Base-01_60: -2040156520
       Base-01_61: -587317648
-      Base-01_62: -2048091457
       Base-01_63: 2093585993
       Base-01_64: 1390856904
       Base-01_66: 1935029755
@@ -1914,7 +1948,6 @@ TextureImporter:
       Base-01_75: -636852776
       Base-01_76: 103371908
       Base-01_77: 1980822276
-      Base-01_78: -1231709506
       Base-01_79: 1133858482
       Base-01_80: 1333671071
       Base-01_9: 1762819659
@@ -1924,6 +1957,12 @@ TextureImporter:
       Base-01_HealthRed: 1065866681
       Base-01_PowerBlue: 1157195804
       Base-01_PowerYellow: -868896203
+      screen_blue: 1155192710
+      screen_brown: -2048091457
+      screen_green: -986888162
+      screen_red: -1231709506
+      screen_stick: -335925943
+      screen_yellow: -2020303545
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
